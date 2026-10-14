@@ -17,6 +17,17 @@ jobs:
       - name: Run LaTeX
         run: xelatex -interaction=nonstopmode -halt-on-error resume.tex
 
+      - name: Convert PDF to PNG
+        run: |
+          sudo apt-get install -y poppler-utils
+          pdftoppm -png -r 200 resume.pdf resume
+
+      - name: Upload CV images
+        uses: actions/upload-artifact@v4
+        with:
+          name: resume-png
+          path: resume-*.png
+
       - name: Commit PDF
         uses: EndBug/add-and-commit@v9
         with:
