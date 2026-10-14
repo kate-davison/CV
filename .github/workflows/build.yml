@@ -19,20 +19,15 @@ jobs:
 
       - name: Convert PDF to PNG
         run: |
+          sudo apt-get update
           sudo apt-get install -y poppler-utils
           pdftoppm -png -r 200 resume.pdf resume
 
-      - name: Upload CV images
-        uses: actions/upload-artifact@v4
-        with:
-          name: resume-png
-          path: resume-*.png
-
-      - name: Commit PDF
+      - name: Commit PDF and PNG
         uses: EndBug/add-and-commit@v9
         with:
-          add: resume.pdf
-          author_name:  Kate Davison
+          add: resume.pdf resume-*.png
+          author_name: Kate Davison
           author_email: kate.davison@bristol.ac.uk
           message: "Build CV"
         env:
